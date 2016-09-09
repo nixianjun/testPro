@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+    <!DOCTYPE mapper   
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserDAO">
+	<select id="getMemberUser" resultType="com.tudou.userstat.model.UserMember">
+		SELECT * FROM
+		td_user_member
+	</select>
+	<select id="getVerifyPerson" resultType="int">
+		select td_user_id from
+		auth_person_info
+	</select>
+	<select id="getVerifyOrg" resultType="int">
+		select td_user_id from
+		auth_org_info
+	</select>
+	<select id="getUserInfos" resultType="com.tudou.userstat.model.UserFullInfo">
+		select userID,username,nickname,sex,userpic,aboutMyself,area_id from
+		user where userId > #{start} limit #{size}
+	</select>
+</mapper>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- 使用注释方式创建对象，需要声明此行 -->
+	<context:annotation-config />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<!-- 扫描com.tudou.webupload中所有有注释声明的类并创建之 -->
+	<context:component-scan base-package="com.tudou" />
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<bean id="propertyConfigurer" class="com.tudou.userstat.tool.PropertiesAccessor">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:constants.properties</value>
+				<value>classpath:memcache.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="writeDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${wdb.jdbc.url}" />
+		<property name="user" value="${wdb.jdbc.username}" />
+		<property name="password" value="${wdb.jdbc.password}" />
+		<property name="initialPoolSize" value="${wdb.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${wdb.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${wdb.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${wdb.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${wdb.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${wdb.jdbc.checkoutTimeout}" />
+	</bean>
+
+	<bean id="writeSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<property name="configLocation" value="classpath:sqlmap-config.xml" />
+				<property name="dataSource" ref="writeDataSource" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="writeJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="writeDataSource" />
+	</bean>
+
+	<bean id="tudouDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${tudou.jdbc.url}" />
+		<property name="user" value="${tudou.jdbc.username}" />
+		<property name="password" value="${tudou.jdbc.password}" />
+		<property name="initialPoolSize" value="${tudou.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${tudou.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${tudou.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${tudou.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${tudou.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${tudou.jdbc.checkoutTimeout}" />
+	</bean>
+
+	<bean id="tudouSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<property name="configLocation" value="classpath:sqlmap-config.xml" />
+				<property name="dataSource" ref="tudouDataSource" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="tudouJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="tudouDataSource" />
+	</bean>
+	
+	 <bean id="userTimeLineDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${usertimeline.jdbc.url}" />
+		<property name="user" value="${usertimeline.jdbc.username}" />
+		<property name="password" value="${usertimeline.jdbc.password}" />
+		<property name="initialPoolSize" value="${usertimeline.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${usertimeline.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${usertimeline.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${usertimeline.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${usertimeline.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${usertimeline.jdbc.checkoutTimeout}" />
+	</bean>
+	<!-- userTimeLine 库 -->
+	<bean id="userTimeLineJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="userTimeLineDataSource"/>
+    </bean>
+
+	<bean id="subDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${sub.jdbc.url}" />
+		<property name="user" value="${sub.jdbc.username}" />
+		<property name="password" value="${sub.jdbc.password}" />
+		<property name="initialPoolSize" value="${sub.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${sub.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${sub.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${sub.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${sub.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${sub.jdbc.checkoutTimeout}" />
+	</bean>
+	
+	<bean id="subJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="subDataSource" />
+	</bean>
+	
+	<bean id="homeDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${home.jdbc.url}" />
+		<property name="user" value="${home.jdbc.username}" />
+		<property name="password" value="${home.jdbc.password}" />
+		<property name="initialPoolSize" value="${home.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${home.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${home.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${home.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${home.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${home.jdbc.checkoutTimeout}" />
+	</bean>
+	
+	<bean id="homeJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="homeDataSource" />
+	</bean>
+
+	<bean id="itemChDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${itemCh.jdbc.url}" />
+		<property name="user" value="${itemCh.jdbc.username}" />
+		<property name="password" value="${itemCh.jdbc.password}" />
+		<property name="initialPoolSize" value="${itemCh.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${itemCh.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${itemCh.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${itemCh.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${itemCh.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${itemCh.jdbc.checkoutTimeout}" />
+	</bean>
+
+	<bean id="itemChSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<property name="configLocation" value="classpath:sqlmap-config.xml" />
+				<property name="dataSource" ref="itemChDataSource" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="itemChJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="itemChDataSource" />
+	</bean>
+
+	<bean id="umsDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${ums.jdbc.url}" />
+		<property name="user" value="${ums.jdbc.username}" />
+		<property name="password" value="${ums.jdbc.password}" />
+		<property name="initialPoolSize" value="${ums.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${ums.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${ums.jdbc.maxPoolSize}" />
+		<property name="acquireIncrement" value="${ums.jdbc.acquireIncrement}" />
+		<property name="maxIdleTime" value="${ums.jdbc.maxIdleTime}" />
+		<property name="checkoutTimeout" value="${ums.jdbc.checkoutTimeout}" />
+	</bean>
+
+	<bean id="umsSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+				<property name="configLocation" value="classpath:sqlmap-config.xml" />
+				<property name="dataSource" ref="umsDataSource" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- 用户客户端 -->
+	<bean id="userServiceClient" class="com.tudou.usersrv.client.UserServiceClient">
+		<property name="app" value="userstat" />
+		<constructor-arg value="${service.user.url}" />
+	</bean>
+
+	<!-- 豆单客户端 -->
+	<bean id="playlistServiceClient" class="com.tudou.playlist.client.PlaylistServiceClient">
+		<property name="app" value="userstat" />
+		<constructor-arg value="${service.playlist.url}" />
+	</bean>
+
+	<!-- 用户视频客户端 -->
+	<bean id="userItemClient" class="com.tudou.useritemsrv.client.UserItemClient">
+		<property name="app" value="userstat" />
+		<constructor-arg value="${service.useritem.url}" />
+	</bean>
+
+	<bean id="itemAPIClient" class="com.tudou.itemviewsrv.client.ItemAPIClient">
+		<constructor-arg value="${service.item.url}" />
+		<property name="app" value="userstat"></property>
+	</bean>
+
+	<bean id="subscriptionClient" class="com.tudou.subscription.client.SubscriptionClient">
+		<property name="app" value="userstat" />
+		<constructor-arg value="${service.subscription.url}" />
+	</bean>
+
+	<bean id="commentClient" class="com.tudou.digservicenew.client.CommentClient">
+		<constructor-arg>
+			<value>http://commconf.hgh.tudou.com/dig/dig_client_jj.properties
+			</value>
+		</constructor-arg>
+		<property name="app" value="userstat"></property>
+	</bean>
+
+	<bean id="digBuryClient" class="com.tudou.digservicenew.client.DigBuryClient">
+		<constructor-arg>
+			<value>http://commconf.hgh.tudou.com/dig/dig_client_jj.properties
+			</value>
+		</constructor-arg>
+		<property name="app" value="userstat"></property>
+	</bean>
+
+	<bean id="ptsClient" class="com.tudou.digservicenew.client.PtsClient">
+		<constructor-arg>
+			<value>http://commconf.hgh.tudou.com/dig/dig_client_jj.properties
+			</value>
+		</constructor-arg>
+		<property name="app" value="lusong"></property>
+	</bean>
+
+	<bean id="s3ServiceClient" class="com.tudou.s3Interface.client.S3ServiceClient"
+		init-method="init">
+		<property name="app" value="userstat" />
+		<property name="soTimeOut" value="10000" />
+		<constructor-arg value="${service.s3.url}" />
+	</bean>
+	
+	    <!--memcache-->
+    <!-- <bean id="userstatMemcache" class="com.danga.MemCached.SockIOPool" factory-method="getInstance" init-method="initialize" destroy-method="shutDown">
+        <constructor-arg value="userstatMemcache"/>
+        <property name="servers">
+            <list>
+                <value>${memcache.userstat.server1}</value>
+            </list>
+        </property>
+        <property name="initConn" value="${memcache.userstat.initConn}"/>
+        <property name="minConn" value="${memcache.userstat.minConn}"/>
+        <property name="maxConn" value="${memcache.userstat.maxConn}"/>
+        <property name="maintSleep" value="${memcache.userstat.maintSleep}"/>
+        <property name="nagle" value="${memcache.userstat.nagle}"/>
+        <property name="socketTO" value="${memcache.userstat.socketTO}"/>
+        <property name="hashingAlg" value="${memcache.userstat.hashingAlg}"/>
+    </bean> -->
+    
+  <!--   <bean id="userstatMemcachedClient" class="com.danga.MemCached.MemCachedClient">
+        <constructor-arg value="userstatMemcache"/>
+        <property name="compressEnable" value="false"/>
+        <property name="primitiveAsString" value="${memcache.userstat.primitiveAsString}"/>
+    </bean> -->
+    
+     <!-- <bean id="memcache" class="com.danga.MemCached.SockIOPool" factory-method="getInstance" init-method="initialize" destroy-method="shutDown">
+        <constructor-arg value="memcache"/>
+        <property name="servers">
+            <list>
+                <value>${memcache.usersrv.server1}</value>
+                <value>${memcache.usersrv.server2}</value>
+                <value>${memcache.usersrv.server3}</value>
+                <value>${memcache.usersrv.server4}</value>
+            </list>
+        </property>
+        <property name="initConn" value="${memcache.usersrv.initConn}"/>
+        <property name="minConn" value="${memcache.usersrv.minConn}"/>
+        <property name="maxConn" value="${memcache.usersrv.maxConn}"/>
+        <property name="maintSleep" value="${memcache.usersrv.maintSleep}"/>
+        <property name="nagle" value="${memcache.usersrv.nagle}"/>
+        <property name="socketTO" value="${memcache.usersrv.socketTO}"/>
+        <property name="hashingAlg" value="${memcache.usersrv.hashingAlg}"/>
+    </bean>
+
+    <bean id="memCachedClient" class="com.danga.MemCached.MemCachedClient">
+        <constructor-arg>
+            <value>memcache</value>
+        </constructor-arg>
+    </bean> -->
+    
+  <!--    <bean id="userStatClient" class="com.tudou.userstat.client.UserStatClient">
+       <constructor-arg value="${service.userStat.serverURL}" />
+       <property name="app" value="userstat" />
+    </bean>	 -->
+    
+    <!-- Xmemcache -->
+	<bean id="userstatXmemcachedBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder" >
+		<constructor-arg value="${xmemcache.userstat.servers}" />
+ 		<property name="connectionPoolSize" value="${xmemcache.userstat.connectionPoolSize}" />
+		<property name="connectTimeout" value="${xmemcache.userstat.connectTimeout}" />
+		<property name="opTimeout" value="${xmemcache.userstat.opTimeout}" />
+		<property name="commandFactory">
+			<bean class="${xmemcache.userstat.commandFactory}"></bean>
+		</property>
+		<property name="sessionLocator">
+			<bean class="${xmemcache.userstat.sessionLocator}"></bean>
+		</property>
+		<property name="transcoder">
+			<bean class="${xmemcache.userstat.transcoder}">
+				<property name="primitiveAsString" value="${xmemcache.userstat.primitiveAsString}" />
+			</bean>
+		</property>
+		<property name="bufferAllocator">
+			<bean class="${xmemcache.userstat.bufferAllocator}"></bean>
+		</property>
+		<property name="failureMode" value="${xmemcache.userstat.failureMode}" />
+ 	</bean>
+
+	<bean id="userstatMemClient" factory-bean="userstatXmemcachedBuilder"
+		factory-method="build" destroy-method="shutdown" />
+		
+		
+		<bean id="labelClientConfig" class="com.tudou.label.client.utils.LabelClientConfig" init-method="init">    
+		     <!-- 锚点服务 -->
+		    <property name="anchor" value="true"/>
+		    <property name="anchorRedisUrl" value="10.25.12.123"/>
+		    <property name="anchorRedisPort" value="6379"/>
+		    <property name="anchorServerUrl" value="label.intra.tudou.com/label-manage"/>
+		    <property name="anchorScenarioPL" value="true"/>
+		</bean>
+</beans>
+

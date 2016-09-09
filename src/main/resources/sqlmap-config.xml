@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="HashMap" type="java.util.HashMap" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/tudou/userstat/dao/ItemChangeHisDAO.xml" />
+		<mapper resource="com/tudou/userstat/dao/ItemDAO.xml" />
+		<mapper resource="com/tudou/userstat/dao/StatDAO.xml" />
+		<mapper resource="com/tudou/userstat/dao/UserDAO.xml" />
+	</mappers>
+</configuration>

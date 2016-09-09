@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	 <classPathEntry  location="E:/workspace/TestPro/src/main/resources/mysql-connector-java-5.1.25-bin.jar"/> 
+	<context id="context" >
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+	   <jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+	    connectionURL="jdbc:mysql://localhost:8306/youkuDig?useUnicode=true&amp;characterEncoding=UTF-8" 
+			userId="beta" password="beta" />
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<javaModelGenerator targetPackage="com.tudou.youkuDigService.entity"
+			targetProject="TestPro">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+	  <sqlMapGenerator targetPackage="com.tudou.youkuDigService.mapper"
+			targetProject="TestPro">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+  	  <javaClientGenerator targetPackage="com.tudou.youkuDigService.dao"
+			targetProject="TestPro" type="XMLMAPPER"
+			implementationPackage="com.happy.backService.test.dao.impl">
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>    
+	      <table tableName="comment_dig_popularity_0"
+		          enableCountByExample="false"
+		          enableUpdateByExample="false"
+				  enableDeleteByExample="false" 
+				  enableSelectByExample="false"
+				  selectByExampleQueryId="false">
+		 </table>   <table tableName="user_comment_operate_0"
+		          enableCountByExample="false"
+		          enableUpdateByExample="false"
+				  enableDeleteByExample="false" 
+				  enableSelectByExample="false"
+				  selectByExampleQueryId="false">
+		 </table>  
+	 </context>
+</generatorConfiguration>

@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tudou.ids.dao.TdItemDelBkMapper" >
+  <resultMap id="BaseResultMap" type="com.tudou.ids.entity.TdItemDelBk" >
+    <id column="itemID" property="itemid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="show_me" property="showMe" jdbcType="BIT" />
+    <result column="programID" property="programid" jdbcType="INTEGER" />
+    <result column="ownerID" property="ownerid" jdbcType="INTEGER" />
+    <result column="media_type" property="mediaType" jdbcType="VARCHAR" />
+    <result column="dl_cost" property="dlCost" jdbcType="TINYINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="BIGINT" />
+    <result column="play_link" property="playLink" jdbcType="VARCHAR" />
+    <result column="dl_link" property="dlLink" jdbcType="VARCHAR" />
+    <result column="picurl" property="picurl" jdbcType="VARCHAR" />
+    <result column="item_source" property="itemSource" jdbcType="VARCHAR" />
+    <result column="decsiption" property="decsiption" jdbcType="VARCHAR" />
+    <result column="pubDate" property="pubdate" jdbcType="DATE" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="checker" property="checker" jdbcType="VARCHAR" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="totalTime" property="totaltime" jdbcType="INTEGER" />
+    <result column="upload_ip" property="uploadIp" jdbcType="VARCHAR" />
+    <result column="p" property="p" jdbcType="INTEGER" />
+    <result column="v" property="v" jdbcType="INTEGER" />
+    <result column="d" property="d" jdbcType="INTEGER" />
+    <result column="c" property="c" jdbcType="INTEGER" />
+    <result column="f" property="f" jdbcType="INTEGER" />
+    <result column="r" property="r" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="delReasonType" property="delreasontype" jdbcType="VARCHAR" />
+    <result column="reportto" property="reportto" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="active_class" property="activeClass" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="subDt" property="subdt" jdbcType="TIMESTAMP" />
+    <result column="deltype" property="deltype" jdbcType="BIT" />
+    <result column="md5" property="md5" jdbcType="VARCHAR" />
+    <result column="channelID" property="channelid" jdbcType="TINYINT" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tudou.ids.entity.TdItemDelBkWithBLOBs" extends="BaseResultMap" >
+    <result column="link" property="link" jdbcType="LONGVARCHAR" />
+    <result column="comments" property="comments" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    itemID, status, show_me, programID, ownerID, media_type, dl_cost, title, size, play_link, 
+    dl_link, picurl, item_source, decsiption, pubDate, source, updateTime, checker, check_time, 
+    totalTime, upload_ip, p, v, d, c, f, r, reason, delReasonType, reportto, code, active_class, 
+    create_datetime, subDt, deltype, md5, channelID, tags
+  </sql>
+  <sql id="Blob_Column_List" >
+    link, comments
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from td_item_del_bk
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from td_item_del_bk
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tudou.ids.entity.TdItemDelBkWithBLOBs" >
+    insert into td_item_del_bk (itemID, status, show_me, 
+      programID, ownerID, media_type, 
+      dl_cost, title, size, 
+      play_link, dl_link, picurl, 
+      item_source, decsiption, pubDate, 
+      source, updateTime, checker, 
+      check_time, totalTime, upload_ip, 
+      p, v, d, c, 
+      f, r, reason, delReasonType, 
+      reportto, code, active_class, 
+      create_datetime, subDt, deltype, 
+      md5, channelID, tags, 
+      link, comments)
+    values (#{itemid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{showMe,jdbcType=BIT}, 
+      #{programid,jdbcType=INTEGER}, #{ownerid,jdbcType=INTEGER}, #{mediaType,jdbcType=VARCHAR}, 
+      #{dlCost,jdbcType=TINYINT}, #{title,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, 
+      #{playLink,jdbcType=VARCHAR}, #{dlLink,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, 
+      #{itemSource,jdbcType=VARCHAR}, #{decsiption,jdbcType=VARCHAR}, #{pubdate,jdbcType=DATE}, 
+      #{source,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, #{checker,jdbcType=VARCHAR}, 
+      #{checkTime,jdbcType=TIMESTAMP}, #{totaltime,jdbcType=INTEGER}, #{uploadIp,jdbcType=VARCHAR}, 
+      #{p,jdbcType=INTEGER}, #{v,jdbcType=INTEGER}, #{d,jdbcType=INTEGER}, #{c,jdbcType=INTEGER}, 
+      #{f,jdbcType=INTEGER}, #{r,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{delreasontype,jdbcType=VARCHAR}, 
+      #{reportto,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{activeClass,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{subdt,jdbcType=TIMESTAMP}, #{deltype,jdbcType=BIT}, 
+      #{md5,jdbcType=VARCHAR}, #{channelid,jdbcType=TINYINT}, #{tags,jdbcType=VARCHAR}, 
+      #{link,jdbcType=LONGVARCHAR}, #{comments,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tudou.ids.entity.TdItemDelBkWithBLOBs" >
+    insert into td_item_del_bk
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        itemID,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="showMe != null" >
+        show_me,
+      </if>
+      <if test="programid != null" >
+        programID,
+      </if>
+      <if test="ownerid != null" >
+        ownerID,
+      </if>
+      <if test="mediaType != null" >
+        media_type,
+      </if>
+      <if test="dlCost != null" >
+        dl_cost,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="playLink != null" >
+        play_link,
+      </if>
+      <if test="dlLink != null" >
+        dl_link,
+      </if>
+      <if test="picurl != null" >
+        picurl,
+      </if>
+      <if test="itemSource != null" >
+        item_source,
+      </if>
+      <if test="decsiption != null" >
+        decsiption,
+      </if>
+      <if test="pubdate != null" >
+        pubDate,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="checker != null" >
+        checker,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="totaltime != null" >
+        totalTime,
+      </if>
+      <if test="uploadIp != null" >
+        upload_ip,
+      </if>
+      <if test="p != null" >
+        p,
+      </if>
+      <if test="v != null" >
+        v,
+      </if>
+      <if test="d != null" >
+        d,
+      </if>
+      <if test="c != null" >
+        c,
+      </if>
+      <if test="f != null" >
+        f,
+      </if>
+      <if test="r != null" >
+        r,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="delreasontype != null" >
+        delReasonType,
+      </if>
+      <if test="reportto != null" >
+        reportto,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="activeClass != null" >
+        active_class,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="subdt != null" >
+        subDt,
+      </if>
+      <if test="deltype != null" >
+        deltype,
+      </if>
+      <if test="md5 != null" >
+        md5,
+      </if>
+      <if test="channelid != null" >
+        channelID,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="showMe != null" >
+        #{showMe,jdbcType=BIT},
+      </if>
+      <if test="programid != null" >
+        #{programid,jdbcType=INTEGER},
+      </if>
+      <if test="ownerid != null" >
+        #{ownerid,jdbcType=INTEGER},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="dlCost != null" >
+        #{dlCost,jdbcType=TINYINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=BIGINT},
+      </if>
+      <if test="playLink != null" >
+        #{playLink,jdbcType=VARCHAR},
+      </if>
+      <if test="dlLink != null" >
+        #{dlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSource != null" >
+        #{itemSource,jdbcType=VARCHAR},
+      </if>
+      <if test="decsiption != null" >
+        #{decsiption,jdbcType=VARCHAR},
+      </if>
+      <if test="pubdate != null" >
+        #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checker != null" >
+        #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totaltime != null" >
+        #{totaltime,jdbcType=INTEGER},
+      </if>
+      <if test="uploadIp != null" >
+        #{uploadIp,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null" >
+        #{p,jdbcType=INTEGER},
+      </if>
+      <if test="v != null" >
+        #{v,jdbcType=INTEGER},
+      </if>
+      <if test="d != null" >
+        #{d,jdbcType=INTEGER},
+      </if>
+      <if test="c != null" >
+        #{c,jdbcType=INTEGER},
+      </if>
+      <if test="f != null" >
+        #{f,jdbcType=INTEGER},
+      </if>
+      <if test="r != null" >
+        #{r,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="delreasontype != null" >
+        #{delreasontype,jdbcType=VARCHAR},
+      </if>
+      <if test="reportto != null" >
+        #{reportto,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="activeClass != null" >
+        #{activeClass,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subdt != null" >
+        #{subdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deltype != null" >
+        #{deltype,jdbcType=BIT},
+      </if>
+      <if test="md5 != null" >
+        #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null" >
+        #{channelid,jdbcType=TINYINT},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tudou.ids.entity.TdItemDelBkWithBLOBs" >
+    update td_item_del_bk
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="showMe != null" >
+        show_me = #{showMe,jdbcType=BIT},
+      </if>
+      <if test="programid != null" >
+        programID = #{programid,jdbcType=INTEGER},
+      </if>
+      <if test="ownerid != null" >
+        ownerID = #{ownerid,jdbcType=INTEGER},
+      </if>
+      <if test="mediaType != null" >
+        media_type = #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="dlCost != null" >
+        dl_cost = #{dlCost,jdbcType=TINYINT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=BIGINT},
+      </if>
+      <if test="playLink != null" >
+        play_link = #{playLink,jdbcType=VARCHAR},
+      </if>
+      <if test="dlLink != null" >
+        dl_link = #{dlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSource != null" >
+        item_source = #{itemSource,jdbcType=VARCHAR},
+      </if>
+      <if test="decsiption != null" >
+        decsiption = #{decsiption,jdbcType=VARCHAR},
+      </if>
+      <if test="pubdate != null" >
+        pubDate = #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checker != null" >
+        checker = #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totaltime != null" >
+        totalTime = #{totaltime,jdbcType=INTEGER},
+      </if>
+      <if test="uploadIp != null" >
+        upload_ip = #{uploadIp,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null" >
+        p = #{p,jdbcType=INTEGER},
+      </if>
+      <if test="v != null" >
+        v = #{v,jdbcType=INTEGER},
+      </if>
+      <if test="d != null" >
+        d = #{d,jdbcType=INTEGER},
+      </if>
+      <if test="c != null" >
+        c = #{c,jdbcType=INTEGER},
+      </if>
+      <if test="f != null" >
+        f = #{f,jdbcType=INTEGER},
+      </if>
+      <if test="r != null" >
+        r = #{r,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="delreasontype != null" >
+        delReasonType = #{delreasontype,jdbcType=VARCHAR},
+      </if>
+      <if test="reportto != null" >
+        reportto = #{reportto,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="activeClass != null" >
+        active_class = #{activeClass,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subdt != null" >
+        subDt = #{subdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deltype != null" >
+        deltype = #{deltype,jdbcType=BIT},
+      </if>
+      <if test="md5 != null" >
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null" >
+        channelID = #{channelid,jdbcType=TINYINT},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tudou.ids.entity.TdItemDelBkWithBLOBs" >
+    update td_item_del_bk
+    set status = #{status,jdbcType=TINYINT},
+      show_me = #{showMe,jdbcType=BIT},
+      programID = #{programid,jdbcType=INTEGER},
+      ownerID = #{ownerid,jdbcType=INTEGER},
+      media_type = #{mediaType,jdbcType=VARCHAR},
+      dl_cost = #{dlCost,jdbcType=TINYINT},
+      title = #{title,jdbcType=VARCHAR},
+      size = #{size,jdbcType=BIGINT},
+      play_link = #{playLink,jdbcType=VARCHAR},
+      dl_link = #{dlLink,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      item_source = #{itemSource,jdbcType=VARCHAR},
+      decsiption = #{decsiption,jdbcType=VARCHAR},
+      pubDate = #{pubdate,jdbcType=DATE},
+      source = #{source,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      checker = #{checker,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      totalTime = #{totaltime,jdbcType=INTEGER},
+      upload_ip = #{uploadIp,jdbcType=VARCHAR},
+      p = #{p,jdbcType=INTEGER},
+      v = #{v,jdbcType=INTEGER},
+      d = #{d,jdbcType=INTEGER},
+      c = #{c,jdbcType=INTEGER},
+      f = #{f,jdbcType=INTEGER},
+      r = #{r,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      delReasonType = #{delreasontype,jdbcType=VARCHAR},
+      reportto = #{reportto,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      active_class = #{activeClass,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      subDt = #{subdt,jdbcType=TIMESTAMP},
+      deltype = #{deltype,jdbcType=BIT},
+      md5 = #{md5,jdbcType=VARCHAR},
+      channelID = #{channelid,jdbcType=TINYINT},
+      tags = #{tags,jdbcType=VARCHAR},
+      link = #{link,jdbcType=LONGVARCHAR},
+      comments = #{comments,jdbcType=LONGVARCHAR}
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tudou.ids.entity.TdItemDelBk" >
+    update td_item_del_bk
+    set status = #{status,jdbcType=TINYINT},
+      show_me = #{showMe,jdbcType=BIT},
+      programID = #{programid,jdbcType=INTEGER},
+      ownerID = #{ownerid,jdbcType=INTEGER},
+      media_type = #{mediaType,jdbcType=VARCHAR},
+      dl_cost = #{dlCost,jdbcType=TINYINT},
+      title = #{title,jdbcType=VARCHAR},
+      size = #{size,jdbcType=BIGINT},
+      play_link = #{playLink,jdbcType=VARCHAR},
+      dl_link = #{dlLink,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      item_source = #{itemSource,jdbcType=VARCHAR},
+      decsiption = #{decsiption,jdbcType=VARCHAR},
+      pubDate = #{pubdate,jdbcType=DATE},
+      source = #{source,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      checker = #{checker,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      totalTime = #{totaltime,jdbcType=INTEGER},
+      upload_ip = #{uploadIp,jdbcType=VARCHAR},
+      p = #{p,jdbcType=INTEGER},
+      v = #{v,jdbcType=INTEGER},
+      d = #{d,jdbcType=INTEGER},
+      c = #{c,jdbcType=INTEGER},
+      f = #{f,jdbcType=INTEGER},
+      r = #{r,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      delReasonType = #{delreasontype,jdbcType=VARCHAR},
+      reportto = #{reportto,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      active_class = #{activeClass,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      subDt = #{subdt,jdbcType=TIMESTAMP},
+      deltype = #{deltype,jdbcType=BIT},
+      md5 = #{md5,jdbcType=VARCHAR},
+      channelID = #{channelid,jdbcType=TINYINT},
+      tags = #{tags,jdbcType=VARCHAR}
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </update>
+</mapper>

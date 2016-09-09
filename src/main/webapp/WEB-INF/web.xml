@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>userstat</display-name>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/**/*-context.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+<!-- 	 <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter> -->
+    <filter>
+		<filter-name>CharactorFilter</filter-name>
+		<filter-class>com.tudou.utils.struts.extend.CharactorFilter</filter-class>
+	</filter>
+	  <filter>
+    <filter-name>AppFilter</filter-name>
+    <filter-class>
+            com.tudou.monitor.appfilter.AppFilter
+        </filter-class>
+    <init-param>
+      <param-name>AliveAction.class</param-name>
+      <param-value>
+                com.tudou.monitor.appfilter.DemoAliveAction
+            </param-value>
+    </init-param>
+    <init-param>
+      <param-name>AccessLog.Enable</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>StatisticsLog.Enable</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  
+  <filter>
+    <filter-name>IpCheckFilter</filter-name>
+    <filter-class>com.tudou.utils.web.IpCheckFilter</filter-class>
+    <init-param>
+      <param-name>checkPeriod</param-name>
+      <param-value>60</param-value>
+    </init-param>
+    <init-param>
+      <param-name>maxNumPerTime</param-name>
+      <param-value>600</param-value>
+    </init-param>
+    <init-param>
+      <param-name>checkPeriodHigh</param-name>
+      <param-value>86400</param-value>
+    </init-param>
+    <init-param>
+      <param-name>maxNumPerTimeHigh</param-name>
+      <param-value>3</param-value>
+    </init-param>
+  </filter>  
+  	<filter-mapping>
+		<filter-name>AppFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- <filter-mapping>
+		<filter-name>IpCheckFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	<filter-mapping>
+		<filter-name>CharactorFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/**/spring-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+  	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+</web-app>

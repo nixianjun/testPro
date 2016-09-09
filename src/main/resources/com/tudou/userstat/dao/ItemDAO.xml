@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+    <!DOCTYPE mapper   
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ItemDAO">
+	<select id="getItemCountByUserId" parameterType="int"
+		resultType="int">
+		SELECT count(1) FROM item WHERE ownerID = #{userId} AND
+		is_checked &lt;> 0
+	</select>
+	<select id="getItemCountByUidDate" parameterType="HashMap"
+		resultType="int">
+		SELECT count(1) FROM item WHERE ownerID = #{userId} AND
+		create_datetime>=#{startDate} AND create_datetime&lt;#{endDate} AND
+		is_checked &lt;> 0
+	</select>
+	<select id="getUserItemIds" parameterType="HashMap"
+		resultType="int">
+		SELECT itemID FROM item WHERE ownerID = #{userId} AND
+		is_checked &lt;> 0
+	</select>
+</mapper>
